@@ -41,6 +41,24 @@ public class ControllerPersona {
         return sp.save(cliente);
     }
 
+    @PostMapping("/actualizar")
+    public Persona update(@RequestBody Persona persona) {
+        Long id = persona.getId();
+        Persona ep = sp.findById(id);
+        
+        if(ep == null) {
+            throw new IllegalArgumentException("La persona con el ID " + id + " no se encontró");
+        }
+        
+        ep.setNombre(persona.getNombre());
+        ep.setApellido(persona.getApellido());
+        ep.setEmail(persona.getEmail());
+        ep.setCromosoma(persona.getCromosoma());
+
+        return sp.save(ep);
+    }
+
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
         sp.delete(id);
